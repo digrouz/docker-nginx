@@ -1,0 +1,65 @@
+FROM alpine:3.12
+LABEL maintainer "DI GREGORIO Nicolas <nicolas.digregorio@gmail.com>"
+
+### Environment variables
+ENV LANG='en_US.UTF-8' \
+    LANGUAGE='en_US.UTF-8' \
+    TERM='xterm' \
+    APPUSER="nginx" \
+    APPGID="10002" \
+    APPUID="10002"
+
+# Copy config files
+COPY root/ /
+
+### Install Application
+RUN set -x && \
+    chmod 1777 /tmp && \
+    . /usr/local/bin/docker-entrypoint-functions.sh && \
+    MYUSER="${APPUSER}" && \
+    MYUID="${APPUID}" && \
+    MYGID="${APPGID}" && \
+    ConfigureUser && \
+    apk --no-cache upgrade && \
+    apk add --no-cache --virtual=build-deps \
+      ca-certificates \
+      libressl \
+    && \
+    mkdir /etc/pki && \
+    ln -s /etc/ssl /etc/pki/tls && \
+    libressl genrsa -out /etc/pki/tls/private/ca.key 2048 && \
+    libressl req -new -key /etc/pki/tls/private/ca.key -out /etc/pki/tls/private/ca.csr -batch && \
+    libressl x509 -req -days 365 -in /etc/pki/tls/private/ca.csr -signkey /etc/pki/tls/private/ca.key -out /etc/pki/tls/certs/ca.crt && \
+    libressl dhparam -out /etc/pki/tls/certs/nginx-dhparam.pem 2048 && \
+    apk del --no-cache --purge \
+      build-deps  \
+    && \
+    apk add --no-cache --virtual=run-deps \
+      bash \
+      ca-certificates \
+      nginx \
+      nginx-mod-http-headers-more \
+    && \
+    ln -s /usr/lib /usr/lib64 && \
+    mkdir /var/run/nginx && \
+    mkdir -p /etc/nginx/vhost-enabled /etc/nginx/vhost-disabled /var/www/html/default && \
+    mkdir /docker-entrypoint.d && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    ln -snf /usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh && \
+    rm -rf /tmp/* \
+           /etc/nginx/{fastcgi_params,koi-utf,koi-win,scgi_params,uwsgi_params,win-utf,conf.d,nginx.conf.rpmnew} \
+           /var/cache/apk/*  \
+           /var/tmp/*
+
+# Expose volumes
+#VOLUME ["/var/www/html/default","/var/log/nginx"]
+
+# Expose ports
+EXPOSE 80
+EXPOSE 443
+
+### Running User: not used, managed by docker-entrypoint.sh
+#USER nginx
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx"]

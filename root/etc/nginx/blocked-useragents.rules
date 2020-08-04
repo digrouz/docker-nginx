@@ -1,0 +1,8 @@
+map $http_user_agent $blockedagent {
+  default         0;
+  ~*malicious     1;
+  ~*bot           0;
+  ~*backdoor      1;
+  ~*crawler       0;
+  ~*bandit        1;
+}

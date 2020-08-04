@@ -1,0 +1,61 @@
+FROM centos:7
+LABEL maintainer "DI GREGORIO Nicolas <ndigregorio@ndg-consulting.tech>"
+
+### Environment variables
+ENV LANG='en_US.UTF-8' \
+    LANGUAGE='en_US.UTF-8' \
+    TERM='xterm' \
+    APPUSER="nginx" \
+    APPGID="10002" \
+    APPUID="10002" \
+    NGINXVERSION='1.16.0' 
+
+# Copy config files
+COPY root/ /
+
+### Install Application
+RUN set -x && \
+    chmod 1777 /tmp && \
+    . /usr/local/bin/docker-entrypoint-functions.sh && \
+    MYUSER="${APPUSER}" && \
+    MYUID="${APPUID}" && \
+    MYGID="${APPGID}" && \
+    ConfigureUser && \
+    yum-config-manager --add-repo /tmp/nginx.repo && \
+    yum-config-manager --add-repo /tmp/custom.repo && \
+    yum update -y && \
+    yum install -y \
+      openssl \
+    && \
+    openssl genrsa -out /etc/pki/tls/private/ca.key 2048 && \
+    openssl req -new -key /etc/pki/tls/private/ca.key -out /etc/pki/tls/private/ca.csr -batch && \
+    openssl x509 -req -days 365 -in /etc/pki/tls/private/ca.csr -signkey /etc/pki/tls/private/ca.key -out /etc/pki/tls/certs/ca.crt && \
+    openssl dhparam -out /etc/pki/tls/certs/nginx-dhparam.pem 2048 && \
+    yum history -y undo last && \
+    yum install -y \
+      nginx-${NGINXVERSION} \
+      nginx-headers-more-${NGINXVERSION} \
+      su-exec \
+    && \
+    mkdir -p /etc/nginx/vhost-enabled /etc/nginx/vhost-disabled /var/www/html/default && \
+    yum clean all && \
+    mkdir /docker-entrypoint.d && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    ln -snf /usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh && \
+    rm -rf /tmp/* \
+           /var/cache/yum/* \
+           /etc/nginx/{fastcgi_params,koi-utf,koi-win,scgi_params,uwsgi_params,win-utf,conf.d,nginx.conf.rpmnew} \
+           /var/tmp/*
+
+# Expose volumes
+#VOLUME ["/var/www/html/default","/var/log/nginx"]
+
+# Expose ports
+EXPOSE 80
+EXPOSE 443
+
+### Running User: not used, managed by docker-entrypoint.sh
+#USER nginx
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx"]

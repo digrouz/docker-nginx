@@ -1,0 +1,32 @@
+map $upstream_http_strict_transport_security $custom_strict_transport_security {
+
+    # Set the $custom_strict_transport_security variable with the original
+    # response header from the upstream server if it consists
+    # of at least one character (. is a regular expression)
+    "~."          $upstream_http_strict_transport_security;
+
+    # Otherwise set it with this value
+    default       "max-age=63072000; includeSubDomains; preload";
+}
+
+map $upstream_http_x_frame_options $custom_x_frame_options {
+
+    # Set the $custom_x_frame_options variable with the original
+    # response header from the upstream server if it consists
+    # of at least one character (. is a regular expression)
+    "~."          $upstream_http_x_frame_options;
+
+    # Otherwise set it with this value
+    default       DENY;
+}
+
+map $upstream_http_x_content_type_options $custom_x_content_type_options {
+
+    # Set the $custom_content_type_options variable with the original
+    # response header from the upstream server if it consists
+    # of at least one character (. is a regular expression)
+    "~."          $upstream_http_x_content_type_options;
+
+    # Otherwise set it with this value
+    default       nosniff;
+}
