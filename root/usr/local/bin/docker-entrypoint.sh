@@ -100,6 +100,14 @@ if [ "${1}" == 'nginx' ]; then
         -e "s|localhost:9001|${MYFCGIURL}|g" \
       /etc/nginx/vhost-enabled/06-fcgi-${MYSSLEXT}.conf
       ;;
+    nextcloud)
+      DockLog "Enabling vhost: 08-nextcloud-${MYSSLEXT}"
+      cp /etc/nginx/vhost-disabled/08-nextcloud-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
+      DockLog "Setting php-fpm URL to ${MYPHPFPMURL}"
+      sed -i \
+        -e "s|localhost:9000|${MYPHPFPMURL}|g" \
+      /etc/nginx/vhost-enabled/08-nextcloud-${MYSSLEXT}.conf
+      ;;
     custom)
       DockLog "Enabling vhost: 07-custom-${MYSSLEXT}"
       if [ -f /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf ]; then
