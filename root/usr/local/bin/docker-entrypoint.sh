@@ -10,6 +10,7 @@ MYPHPFPMURL="php-fpm:9000"
 MYFCGIURL="fcgi:9001"
 MYSSL="0"
 MYVHOST="default"
+MYUPSTREAMURL="myupstream:80"
 
 ConfigureUser
 
@@ -107,6 +108,14 @@ if [ "${1}" == 'nginx' ]; then
       sed -i \
         -e "s|localhost:9000|${MYPHPFPMURL}|g" \
       /etc/nginx/vhost-enabled/08-nextcloud-${MYSSLEXT}.conf
+      ;;
+    proxy)
+      DockLog "Enabling vhost: 09-proxy-${MYSSLEXT}"
+      cp /etc/nginx/vhost-disabled/09-proxy-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
+      DockLog "Setting upstream URL to ${MYUPSTREAMURL}"
+      sed -i \
+        -e "s|localhost:80|${MYPHPFPMURL}|g" \
+      /etc/nginx/vhost-enabled/09-proxy-${MYSSLEXT}.conf
       ;;
     custom)
       DockLog "Enabling vhost: 07-custom-${MYSSLEXT}"

@@ -21,7 +21,8 @@ http://nginx.org/
       -e DOCKPHPFPMURL=<url-to-php-fpm default:php-fpm:9000> \
       -e DOCKFCGIURL=<url-to-fastcgi default:fcgi:9001> \
       -e DOCKSSL=<0|1 default:0> \
-      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|custom default:default>
+      -e DOCKUPSTREAMURL=<url-to-upstream default:myupstream:80> \
+      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|proxy|custom default:default>
       -p 80:80 \
       -p 443:443 docker/docker-nginx
 
@@ -45,13 +46,17 @@ This variable is not mandatory and specifies the URL of a PHP FPM server. It has
 
 This variable is not mandatory and specifies the URL of a FastCGI server. It has default value `fcgi:9001`.
 
+### `DOCKUPSTREAMURL`
+
+This variable is not mandatory and specifies the URL of a webservice to proxy. It has default value `myupstream:80`.
+
 ### `DOCKSSL`
 
 This variable is not mandatory and specifies if the configured vhost will serve through https or http. It has default value `0`.
 
 ### `DOCKVHOST`
 
-This variable is not mandatory and specifies to the entrypoint which vhost to configure. Valid values are `default`, `php`, `symfony3-dev`, `symfony3-prd`, `symfony4` and `angular`. It has default value `default`.
+This variable is not mandatory and specifies to the entrypoint which vhost to configure. Valid values are `default`, `php`, `symfony3-dev`, `symfony3-prd`, `symfony4`, `angular`, `grav`, `fcgi`, `nextcloud`, `proxy` or `custom`. It has default value `default`.
 * `default` will configure a vhost to serve static files.
 * `php` will configure a vhost that support php-fpm.
 * `symfony3-prd` will configure a vhost with support for symfony 3 production environment.
@@ -60,7 +65,8 @@ This variable is not mandatory and specifies to the entrypoint which vhost to co
 * `angular` will configure a vhost with support for angular.
 * `grav` will configure a vhost with support for grav CMS.
 * `fcgi` will configure a vhost with support for FastCGI like spawn-fcgi.
-* `nextcloud` will configure a vhost with support for Nextcloud
+* `nextcloud` will configure a vhost with support for Nextcloud.
+* `proxy` will configure a vhost that will allow to proxy a given host and port.
 * `custom` will configure a vhost from a provided vhost config file `/docker-entrypoint.d/07-custom-http(s).conf`
 
 ## Notes
