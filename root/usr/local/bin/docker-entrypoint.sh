@@ -16,6 +16,9 @@ ConfigureUser
 
 if [ "${1}" == 'nginx' ]; then
   MYSSLEXT=""
+  if [ -n  "${DOCKUPSTREAMURL}" ]; then
+    MYUPSTREAMURL="${DOCKUPSTREAMURL}"
+  fi
   if [ -n  "${DOCKPHPFPMURL}" ]; then
     MYPHPFPMURL="${DOCKPHPFPMURL}"
   fi
