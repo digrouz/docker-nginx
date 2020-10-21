@@ -114,7 +114,7 @@ if [ "${1}" == 'nginx' ]; then
       cp /etc/nginx/vhost-disabled/09-proxy-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
       DockLog "Setting upstream URL to ${MYUPSTREAMURL}"
       sed -i \
-        -e "s|localhost:80|${MYPHPFPMURL}|g" \
+        -e "s|localhost:80|${MYUPSTREAMURL}|g" \
       /etc/nginx/vhost-enabled/09-proxy-${MYSSLEXT}.conf
       ;;
     custom)
