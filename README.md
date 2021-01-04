@@ -22,7 +22,7 @@ http://nginx.org/
       -e DOCKFCGIURL=<url-to-fastcgi default:fcgi:9001> \
       -e DOCKSSL=<0|1 default:0> \
       -e DOCKUPSTREAMURL=<url-to-upstream default:myupstream:80> \
-      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|proxy|custom default:default>
+      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|proxy|spotweb|custom default:default>
       -p 80:80 \
       -p 443:443 docker/docker-nginx
 
@@ -56,7 +56,7 @@ This variable is not mandatory and specifies if the configured vhost will serve 
 
 ### `DOCKVHOST`
 
-This variable is not mandatory and specifies to the entrypoint which vhost to configure. Valid values are `default`, `php`, `symfony3-dev`, `symfony3-prd`, `symfony4`, `angular`, `grav`, `fcgi`, `nextcloud`, `proxy` or `custom`. It has default value `default`.
+This variable is not mandatory and specifies to the entrypoint which vhost to configure. Valid values are `default`, `php`, `symfony3-dev`, `symfony3-prd`, `symfony4`, `angular`, `grav`, `fcgi`, `nextcloud`, `proxy`, `spotweb` or `custom`. It has default value `default`.
 * `default` will configure a vhost to serve static files.
 * `php` will configure a vhost that support php-fpm.
 * `symfony3-prd` will configure a vhost with support for symfony 3 production environment.
@@ -67,6 +67,7 @@ This variable is not mandatory and specifies to the entrypoint which vhost to co
 * `fcgi` will configure a vhost with support for FastCGI like spawn-fcgi.
 * `nextcloud` will configure a vhost with support for Nextcloud.
 * `proxy` will configure a vhost that will allow to proxy a given host and port.
+* `spotweb` will configure a vhost with support for Spotweb.
 * `custom` will configure a vhost from a provided vhost config file `/docker-entrypoint.d/07-custom-http(s).conf`
 
 ## Notes
