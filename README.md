@@ -22,7 +22,7 @@ http://nginx.org/
       -e DOCKFCGIURL=<url-to-fastcgi default:fcgi:9001> \
       -e DOCKSSL=<0|1 default:0> \
       -e DOCKUPSTREAMURL=<url-to-upstream default:myupstream:80> \
-      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|proxy|spotweb|custom default:default>
+      -e DOCKVHOST<default|php|symfony3-dev|symfony3-prd|symfony4|angular|grav|fcgi|nextcloud|proxy|spotweb|mediawiki|custom default:default>
       -p 80:80 \
       -p 443:443 docker/docker-nginx
 
@@ -68,6 +68,7 @@ This variable is not mandatory and specifies to the entrypoint which vhost to co
 * `nextcloud` will configure a vhost with support for Nextcloud.
 * `proxy` will configure a vhost that will allow to proxy a given host and port.
 * `spotweb` will configure a vhost with support for Spotweb.
+* `mediawiki` will configure a vhost with support for [Mediawiki Short URLs][1].
 * `custom` will configure a vhost from a provided vhost config file `/docker-entrypoint.d/07-custom-http(s).conf`
 
 ## Notes
@@ -78,3 +79,5 @@ This variable is not mandatory and specifies to the entrypoint which vhost to co
 * Avoiding to define `DOCKSSL` will result to let the entrypoint configure nginx with a regular vhost without SSL support.
 * Avoiding to define `DOCKVHOST` will result to let the entrypoint configure nginx with a regular vhost without support php-fpm.
 * The image supports adding bash droplets in /docker-entrypoint.d that will be launched at start up just before the launch of nginx.
+
+[1]: https://www.mediawiki.org/wiki/Manual:Short_URL/Nginx

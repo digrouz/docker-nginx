@@ -128,7 +128,14 @@ if [ "${1}" == 'nginx' ]; then
         -e "s|localhost:9000|${MYPHPFPMURL}|g" \
       /etc/nginx/vhost-enabled/10-spotweb-${MYSSLEXT}.conf
       ;;
-    custom)
+    mediawiki)
+      DockLog "Enabling vhost: 11-mediawiki-${MYSSLEXT}"
+      cp /etc/nginx/vhost-disabled/11-mediawiki-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
+      DockLog "Setting php-fpm URL to ${MYPHPFPMURL}"
+      sed -i \
+        -e "s|localhost:9000|${MYPHPFPMURL}|g" \
+      /etc/nginx/vhost-enabled/10-spotweb-${MYSSLEXT}.conf
+      ;;custom)
       DockLog "Enabling vhost: 07-custom-${MYSSLEXT}"
       if [ -f /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf ]; then
         cp /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
