@@ -23,14 +23,14 @@ RUN set -x && \
     apk --no-cache upgrade && \
     apk add --no-cache --virtual=build-deps \
       ca-certificates \
-      libressl \
+      openssl \
     && \
     mkdir /etc/pki && \
     ln -s /etc/ssl /etc/pki/tls && \
-    libressl genrsa -out /etc/pki/tls/private/ca.key 2048 && \
-    libressl req -new -key /etc/pki/tls/private/ca.key -out /etc/pki/tls/private/ca.csr -batch && \
-    libressl x509 -req -days 365 -in /etc/pki/tls/private/ca.csr -signkey /etc/pki/tls/private/ca.key -out /etc/pki/tls/certs/ca.crt && \
-    libressl dhparam -out /etc/pki/tls/certs/nginx-dhparam.pem 2048 && \
+    openssl genrsa -out /etc/pki/tls/private/ca.key 2048 && \
+    openssl req -new -key /etc/pki/tls/private/ca.key -out /etc/pki/tls/private/ca.csr -batch && \
+    openssl x509 -req -days 365 -in /etc/pki/tls/private/ca.csr -signkey /etc/pki/tls/private/ca.key -out /etc/pki/tls/certs/ca.crt && \
+    openssl dhparam -out /etc/pki/tls/certs/nginx-dhparam.pem 4096 && \
     apk del --no-cache --purge \
       build-deps  \
     && \
