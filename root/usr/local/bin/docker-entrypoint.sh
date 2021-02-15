@@ -134,7 +134,7 @@ if [ "${1}" == 'nginx' ]; then
       DockLog "Setting php-fpm URL to ${MYPHPFPMURL}"
       sed -i \
         -e "s|localhost:9000|${MYPHPFPMURL}|g" \
-      /etc/nginx/vhost-enabled/10-spotweb-${MYSSLEXT}.conf
+      /etc/nginx/vhost-enabled/11-mediawiki-${MYSSLEXT}.conf
       ;;custom)
       DockLog "Enabling vhost: 07-custom-${MYSSLEXT}"
       if [ -f /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf ]; then
