@@ -1,4 +1,3 @@
-[![auto-update-workflow](https://github.com/digrouz/docker-nginx/actions/workflows/auto-update.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/auto-update.yml)
 [![dockerhub-workflow](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml)
 ![Docker Pulls](https://img.shields.io/docker/pulls/digrouz/nginx)
 
@@ -6,6 +5,12 @@
 Installs NGINX into a  Linux container
 
 ![nginx](https://assets.wp.nginx.com/wp-content/themes/nginx-theme/assets/img//logo.png)
+
+## Tag
+Several tag are available:
+* latest: see alpine
+* centos7: [Dokerfile_centos7](https://github.com/digrouz/docker-nginx/blob/master/Dockerfile_centos7)
+* alpine: [Dockerfile_alpine](https://github.com/digrouz/docker-nginx/blob/master/Dockerfile_alpine)
 
 ## Description
 
