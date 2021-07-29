@@ -39,7 +39,7 @@ RUN set -x && \
     && \
     mkdir -p /etc/nginx/vhost-enabled /etc/nginx/vhost-disabled /var/www/html/default && \
     yum clean all && \
-    mkdir /docker-entrypoint.d && \
+    mkdir -p /docker-entrypoint.d && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     ln -snf /usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh && \
     rm -rf /tmp/* \
