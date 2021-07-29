@@ -41,9 +41,9 @@ RUN set -x && \
       nginx-mod-http-headers-more \
     && \
     ln -s /usr/lib /usr/lib64 && \
-    mkdir /var/run/nginx && \
+    mkdir -p /var/run/nginx && \
     mkdir -p /etc/nginx/vhost-enabled /etc/nginx/vhost-disabled /var/www/html/default && \
-    mkdir /docker-entrypoint.d && \
+    mkdir -p /docker-entrypoint.d && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     ln -snf /usr/local/bin/docker-entrypoint.sh /docker-entrypoint.sh && \
     rm -rf /tmp/* \
