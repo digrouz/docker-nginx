@@ -1,5 +1,9 @@
+[![auto-update-workflow](https://github.com/digrouz/docker-nginx/actions/workflows/auto-update.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/auto-update.yml)
+[![dockerhub-workflow](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml)
+![Docker Pulls](https://img.shields.io/docker/pulls/digrouz/nginx)
+
 # docker-nginx
-Installs NGINX into an CentOS Linux container
+Installs NGINX into a  Linux container
 
 ![nginx](https://assets.wp.nginx.com/wp-content/themes/nginx-theme/assets/img//logo.png)
 
