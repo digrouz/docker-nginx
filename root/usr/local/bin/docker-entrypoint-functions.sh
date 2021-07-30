@@ -10,9 +10,10 @@ DetectOS(){
   elif [ -e /etc/os-release ]; then
     if grep -q "NAME=\"Ubuntu\"" /etc/os-release ; then
       OS="ubuntu"
-    fi
-    if grep -q "NAME=\"CentOS Linux\"" /etc/os-release ; then
-      OS="centos"
+    elif grep -q "NAME=\"CentOS Linux\"" /etc/os-release ; then
+      OS="rhel"
+    elif grep -q "NAME=\"Rocky Linux\"" /etc/os-release ; then
+      OS="rhel"
     fi
   fi
   echo $OS
@@ -156,7 +157,7 @@ ConfigureUser () {
 DockLog(){
   local OS=$(DetectOS)
   local MYDATE=$(date)
-  if [ "${OS}" == "centos" ] || [ "${OS}" == "alpine" ]; then
+  if [ "${OS}" == "rhel" ] || [ "${OS}" == "alpine" ]; then
     echo "[${MYDATE}] ${1}"
   else
     logger "[${MYDATE}] ${1}"
@@ -193,23 +194,5 @@ PrepareEnvironment(){
     DockLog "Created environment file /etc/profile.d/docker-$(basename ${1}).sh"
   else
     DockLog "Given argument is not supported"
-  fi
-}
-
-ConfigureSsmtp () {
-  # Customizing sstmp
-  if [ -f /etc/ssmtp/ssmtp.conf ];then
-    # Configure relay
-    if [ -n "${DOCKRELAY}" ]; then
-      sed -i "s|mailhub=mail|mailhub=${DOCKRELAY}|i" /etc/ssmtp/ssmtp.conf
-    fi
-    # Configure root
-    if [ -n "${DOCKMAIL}" ]; then
-      sed -i "s|root=postmaster|root=${DOCKMAIL}|i" /etc/ssmtp/ssmtp.conf
-    fi
-    # Configure domain
-    if [ -n "${DOCKMAILDOMAIN}" ]; then
-      sed -i "s|#rewriteDomain=.*|rewriteDomain=${DOCKMAILDOMAIN}|i" /etc/ssmtp/ssmtp.conf
-    fi
   fi
 }
