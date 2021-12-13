@@ -27,6 +27,7 @@ RUN set -x && \
     && \
     mkdir /etc/pki && \
     ln -s /etc/ssl /etc/pki/tls && \
+    mkdir /etc/pki/tls/private && \
     openssl genrsa -out /etc/pki/tls/private/ca.key 2048 && \
     openssl req -new -key /etc/pki/tls/private/ca.key -out /etc/pki/tls/private/ca.csr -batch && \
     openssl x509 -req -days 365 -in /etc/pki/tls/private/ca.csr -signkey /etc/pki/tls/private/ca.key -out /etc/pki/tls/certs/ca.crt && \
