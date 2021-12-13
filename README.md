@@ -1,4 +1,5 @@
-[![dockerhub-workflow](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml)
+[![update-alpine](https://github.com/digrouz/docker-nginx/actions/workflows/update-alpine.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/update-alpine.yml)
+[![dockerhub](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml/badge.svg)](https://github.com/digrouz/docker-nginx/actions/workflows/dockerhub.yml)
 ![Docker Pulls](https://img.shields.io/docker/pulls/digrouz/nginx)
 
 # docker-nginx
