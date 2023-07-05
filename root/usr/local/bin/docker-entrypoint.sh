@@ -143,7 +143,7 @@ if [ "${1}" == 'nginx' ]; then
       sed -i \
         -e "s|localhost:80|${MYUPSTREAMURL}|g" \
       /etc/nginx/vhost-enabled/12-proxycache-${MYSSLEXT}.conf
-      mkdir /tmp/nginx/cache
+      mkdir -p /tmp/nginx/cache
       chown -R "${MYUSER}" /tmp/nginx
       ;;
     custom)
