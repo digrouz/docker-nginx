@@ -135,7 +135,16 @@ if [ "${1}" == 'nginx' ]; then
       sed -i \
         -e "s|localhost:9000|${MYPHPFPMURL}|g" \
       /etc/nginx/vhost-enabled/11-mediawiki-${MYSSLEXT}.conf
-      ;;custom)
+      ;;
+    proxycache)
+      DockLog "Enabling vhost: 12-proxycache-${MYSSLEXT}"
+      cp /etc/nginx/vhost-disabled/12-proxycache-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
+      DockLog "Setting upstream URL to ${MYUPSTREAMURL}"
+      sed -i \
+        -e "s|localhost:80|${MYUPSTREAMURL}|g" \
+      /etc/nginx/vhost-enabled/12-proxycache-${MYSSLEXT}.conf
+      ;;
+    custom)
       DockLog "Enabling vhost: 07-custom-${MYSSLEXT}"
       if [ -f /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf ]; then
         cp /docker-entrypoint.d/07-custom-${MYSSLEXT}.conf /etc/nginx/vhost-enabled/
