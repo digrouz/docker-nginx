@@ -10,7 +10,6 @@ Installs NGINX into a  Linux container
 ## Tag
 Several tag are available:
 * latest: see alpine
-* centos7: [Dokerfile_centos7](https://github.com/digrouz/docker-nginx/blob/master/Dockerfile_centos7)
 * alpine: [Dockerfile_alpine](https://github.com/digrouz/docker-nginx/blob/master/Dockerfile_alpine)
 
 ## Description

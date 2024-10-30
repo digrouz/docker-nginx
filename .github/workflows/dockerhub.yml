@@ -41,14 +41,6 @@ jobs:
           file: Dockerfile_alpine
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:alpine
-      -
-        name: Build and push tag centos7
-        uses: docker/build-push-action@master
-        with:
-          context: .
-          file: Dockerfile_centos7
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx:centos7
   dockerHubDescription:
     runs-on: ubuntu-latest
     steps:
