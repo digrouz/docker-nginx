@@ -1,4 +1,4 @@
-FROM alpine:
+FROM alpine:3.21.2
 LABEL maintainer="DI GREGORIO Nicolas <nicolas.digregorio@gmail.com>"
 
 ### Environment variables
